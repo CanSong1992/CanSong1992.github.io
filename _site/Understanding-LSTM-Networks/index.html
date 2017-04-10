@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Can Song</title>
+
+        <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+
+" />
+    <meta property="og:description" content="
+
+" />
+    
+    <meta name="author" content="Can Song" />
+
+    
+    <meta property="og:title" content="理解LSTM网络" />
+    <meta property="twitter:title" content="理解LSTM网络" />
+    
+
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="alternate" type="application/rss+xml" title="Can Song - Can' Home" href="/feed.xml" />
+
+  </head>
+
+  <body>
+    <div class="wrapper-masthead">
+      <div class="container">
+        <header class="masthead clearfix">
+          <a href="/" class="site-avatar"><img src="/images/pic.gif" /></a>
+
+          <div class="site-info">
+            <h1 class="site-name"><a href="/">Can Song</a></h1>
+            <p class="site-description">Can' Home</p>
+          </div>
+
+          <nav>
+            <a href="/">Blog</a>
+            <!--a href="/about">About</a-->
+          </nav>
+        </header>
+      </div>
+    </div>
+
+    <div id="main" role="main" class="container">
+      <article class="post">
+  <h1>理解LSTM网络</h1>
+
+  <div class="entry">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+<p>原文：<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p>
+<h2 id="循环神经网络">循环神经网络</h2>
+<p>  人类每一次思考不都是从头开始的。当你读这篇文章的时候，你读的每一个词都是基于以前每一个词的理解。所有的记忆都不会丢掉从头开始思考，思维都保存下来了。</p>
+
+<p>  传统的神经网络不能做到这些，他有一个主要的缺陷。例如，想象一下，你想要把一场电影中每一个点正在发生的事搞清楚。传统的神经网络很难从电影先前的事件从推断出后来的事情。</p>
+
+<p>  循环神经网络解决了这个问题。这种神经网络带有环，能够保存信息。</p>
+
+<div align="center" style="margin-left:20%;margin-right:20%;padding:20px 25% 20px 25%;background-color:#666;"><!--上 右 下 左-->
+	<img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-rolled.png" />
+</div>
+<p align="center">循环神经网络带环</p>
+
+<p>  在上图中，神经网络中的方框\(A\)输入\(x_t\),输出\(h_t\)。网络中的环总是让信息从某一时刻流向下一时刻。</p>
+
+<p>  这些环似乎成了循环神经网络的一个迷。然而，如果你多思考一下，它们并不比传统的神经网络复杂很多。一个循环神经网络可以看成是多个相同网络的复制，每一个节点把信息传给下一个。思考一下我们把环展开的时候发生了什么：</p>
+
+<div style="margin-left:20%;margin-right:20%;padding:20px 20px 20px 20px;background-color:#666;">
+	<img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-unrolled.png" />
+</div>
+<p align="center">展开的神经网络</p>
+
+<p>  这个链状的结构揭示了循环神经网络与序列和列表密切相关的本质。它们是处理数据的神经网络的自然结构。</p>
+
+<p>  这无疑是有用的！在早些年，RNNs非常成功的应用到了这些方面：语音识别，语言建模，翻译，图像字幕……还有很多方面。我将就Andrej Karpathy优秀的博客<a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">The Unreasonable Effectiveness of Recurrent Neural Networks</a>讨论他用RNNs实现的惊人成果。这真的很有意义。</p>
+
+<p>  这些成功的本事是“LSTMs”的使用，“LSTMs”一种特殊的循环神经网络，对于很多问题，它比标准的神经网络表现得更好。几乎所有基于循环神经网络的激动人心的成果都是用它实现的。这也是写这篇文章的原因。</p>
+
+<h2 id="长时依赖问题">长时依赖问题</h2>
+<p>  RNNs吸引人的原因之一是它能把先前的信息连接到当前的任务，例如把先前的视频帧的信息用于当前帧的理解。如果RNNs能做这些，它将是非常有用的。但是它能吗？并不能。</p>
+
+<p>  有些时候，我们仅仅需要寻找最近的信息去完成当前任务。例如，构建一个用先前信息预测下一个单词的模型。如果我们想要预测句子“The clouds are in the <strong><em>sky</em></strong>”中最后的词。我们不需要任何前面的语境——显然接下来的词就是<strong><em>sky</em></strong>。在这中情况下，所需要的相关信息和它的位置之间的间隔是很小的，RNNs能学会使用先前的信息。</p>
+
+<div style="margin-left:20%;margin-right:20%;padding:20px 20px 20px 20px;background-color:#666;"> 
+	<img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-shorttermdepdencies.png" />
+</div>
+
+<p>  但是有些场景也需要更多的上下文信息。思考预测文本“I grew up in French……I speek fluent <em>French</em>”中最后一个单词，最近的信息表明接下来的词可能是一种语言的名字，但是我们想要搞清楚是哪一种语言，我们需要很靠前的上文Franch。很可能相关信息和自身位置之间的间隔必须是很大的。
+  不幸的是，当这个间隔变得很大时，RNNs将很难学会联系相关信息。</p>
+
+<div style="margin-left:20%;margin-right:20%;padding:20px 20px 20px 20px;background-color:#666;"> 
+	<img src="http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/RNN-shorttermdepdencies.png" />
+</div>
+
+<hr />
+
+  </div>
+
+  <div class="date">
+    Written on April 10, 2017
+  </div>
+
+  
+</article>
+
+    </div>
+
+    <div class="wrapper-footer">
+      <div class="container">
+        <footer class="footer">
+          
+
+
+
+<a href="https://github.com/barryclark/jekyll-now"><i class="svg-icon github"></i></a>
+
+
+
+
+<a href="https://www.twitter.com/jekyllrb"><i class="svg-icon twitter"></i></a>
+
+
+
+        </footer>
+      </div>
+    </div>
+
+    
+
+  </body>
+</html>
