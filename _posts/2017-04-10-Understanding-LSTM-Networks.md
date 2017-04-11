@@ -164,7 +164,7 @@ title: 理解LSTM网络
 
 ## 致谢
 
-&&emsp;&emsp;我很感谢很多人帮助我更好的理解了LSTMs，可视化的评论，对这篇博文提供了反馈。非常感谢google的同事非常友好的反馈，尤其是[Oriol Vinyals](http://research.google.com/pubs/OriolVinyals.html), [Greg Corrado](http://research.google.com/pubs/GregCorrado.html), [Jon Shlens](http://research.google.com/pubs/JonathonShlens.html), [Luke Vilnis](http://people.cs.umass.edu/~luke/)和[Ilya Sutskever](http://www.cs.toronto.edu/~ilya/)。同时也感谢其他花时间来帮助我的朋友和同事，包括[Dario Amodei](https://www.linkedin.com/pub/dario-amodei/4/493/393), [Jacob Steinhardt](http://cs.stanford.edu/~jsteinhardt/)。尤其是[Kyunghyun Cho](http://www.kyunghyuncho.me/)对我的图示给予了非常具有思考价值的回应。
+&emsp;&emsp;我很感谢很多人帮助我更好的理解了LSTMs，可视化的评论，对这篇博文提供了反馈。非常感谢google的同事非常友好的反馈，尤其是[Oriol Vinyals](http://research.google.com/pubs/OriolVinyals.html), [Greg Corrado](http://research.google.com/pubs/GregCorrado.html), [Jon Shlens](http://research.google.com/pubs/JonathonShlens.html), [Luke Vilnis](http://people.cs.umass.edu/~luke/)和[Ilya Sutskever](http://www.cs.toronto.edu/~ilya/)。同时也感谢其他花时间来帮助我的朋友和同事，包括[Dario Amodei](https://www.linkedin.com/pub/dario-amodei/4/493/393), [Jacob Steinhardt](http://cs.stanford.edu/~jsteinhardt/)。尤其是[Kyunghyun Cho](http://www.kyunghyuncho.me/)对我的图示给予了非常具有思考价值的回应。
 
 &emsp;&emsp;最后，在两个研讨会上，我讨论了神经网络并练习去解释LSTMs。很感谢每个人耐心的参与并给了建议。
 

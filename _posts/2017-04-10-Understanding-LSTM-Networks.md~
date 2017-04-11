@@ -169,7 +169,6 @@ title: 理解LSTM网络
 &emsp;&emsp;最后，在两个研讨会上，我讨论了神经网络并练习去解释LSTMs。很感谢每个人耐心的参与并给了建议。
 
 ---
-
 <li id="fn1"><p>[1].&emsp;除了原有作者，还有很多人对LSTM的改进做出了贡献。所列不全：Felix Gers, Fred Cummins, Santiago Fernandez, Justin Bayer, Daan Wierstra, Julian Togelius, Faustino Gomez, Matteo Gagliolo和 <a href="https://scholar.google.com/citations?user=DaFHynwAAAAJ&amp;hl=en">Alex Graves</a>.<a href="#fnref1">↩</a></p></li>
 
 
