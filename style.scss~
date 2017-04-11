@@ -27,13 +27,13 @@ body {
   margin: 0 auto;
   max-width: 1080px;
   padding: 0 10px;
-  width: 50%;
+  width: 60%;
 	background: $darkGray;
 }
 
-h1, h2, h3, h4, h5, h6,i {
+h1, h2, h3, h4, h5, h6 {
   font-family: $helveticaNeue;
-  color: $darkerGray;
+  color: orange;
   font-weight: bold;
 
   line-height: 1.7;
@@ -43,10 +43,6 @@ h1, h2, h3, h4, h5, h6,i {
   @include mobile {
     line-height: 1.4;
   }
-}
-
-i {
-  font-size: 24px;
 }
 
 h1 {
